@@ -1,0 +1,136 @@
+/* трансформация таблицы бля вертикального отображения строк */
+
+tr      { 
+        display: block; 
+        float: left; 
+        }
+th, td { 
+        display: block;
+         border: 1px solid black;
+        }
+tr>*:not(:first-child) {
+        border-top: 0; }
+tr:not(:first-child)>* {
+        border-left:0; }
+
+/* выделение строк и столбцов */
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	width: 100%;
+	overflow: hidden;
+}
+table th, table td {
+
+	/* padding: 10px; */
+	/* text-align: center;
+	vertical-align: middle; */
+	/* position: relative; */
+}
+table th, table td {
+
+	/* padding: 10px;
+	text-align: center;
+	vertical-align: middle; */
+	position: relative;
+}
+table td:hover {
+	background: aquamarine;
+}
+ 
+table td:hover:before { 
+	background-color: #fdf7c1;
+	content: '';  
+	height: 100%;
+	left: -5000px;
+	position: absolute;  
+	top: 0;
+	width: 5000px;   
+	z-index: -2;        
+}
+ 
+table td:hover:after { 
+	background-color: #fdf7c1;
+	content: '';  
+	height: 5000px;    
+	left: 0;
+	position: absolute;  
+	top: -5000px;
+	width: 100%;
+	z-index: -1;        
+}
+
+/* растягивание таблицы по всей ширине блока */
+
+table tr {
+        width: 5.88%;
+}
+
+
+/*   настройки ячеек */
+.tb {
+    /*  настройка отображения границ ячеек   */
+    border-color: #212121;
+    border-style: solid;
+    border-width: 1px;
+
+    /*  размеры ячеек    */
+    width: auto;
+    height: 2.35vh;  
+
+    /*   настройки отображения содержимого ячеек   */
+    text-align:center;
+    vertical-align: middle;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 90%;
+}
+
+
+/* вывод года поверх таблицы */
+.yrTable {
+position: absolute;
+/* top: 5vh; */
+margin: 2.5vh;
+right: 0;
+font-size: 4vh;
+background-color: white;
+z-index: 1;
+border: 2px black solid;
+}
+
+sup {
+}
+
+
+/* настройки для печатной версии графика */
+
+@media print{
+	* {
+	-webkit-print-color-adjust: exact !important;
+	color-adjust: exact !important;
+	}
+	}
+
+@media print{
+		ul, ol, table {
+		page-break-inside: avoid;
+		}
+		}
+
+@media print {
+		.noprint {
+			display: none;
+			}
+			}
+
+@media screen {
+		.yrTable {
+				display: none;
+				}
+				}
+@media print{
+		.yrTable {
+				display: block;
+				}
+				}

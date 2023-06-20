@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang ="ru" >
+<head>
+ <meta charset ="utf-8" >
+ <meta name ="viewport" content ="width=device-width, initial-scale=1" >
+ <title>График смен</title>
+ <link href="./css/style.css" rel="stylesheet">
+ <link href ="./css/bootstrap.min.css" rel ="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+        <div class="col-md-12">
+            <!-- <h1 class="text-center noprint">График смен оперативного персонала</h1> -->
+        </div>
+            <div id="calendar">
+                <div class="row">
+                <div class="col-md-2 noprint">
+                    <div class="row">
+        <button @click="getCalendar(0)">{{ yr - 1}}</button>
+        <!--     переделать без center     -->
+        <h1><center>{{ yr }}</center></h1>
+
+        <button @click="getCalendar(1)">{{ yr + 1}}</button>
+                    </div>
+            <!-- <p v-if="ily()">Этот год високосный</p>
+            <p v-else>Этот год не високосный</p> -->
+                </div>
+            <div class="col-md-10 col-sm-12">
+                <div class="yrTable">{{ yr }}</div>
+<table>
+<!--
+Каждой ячейке основной таблицы должен присваиваться учникальй id для взаимодействия с ними: для таблицы с расстановкой смен id="1", для таблицы с месяцами id="1-31".
+Таблица генерируется из матрицы, которая будет представлять из себя двумерный массив соостоящий из номера месяца и номера дней в месяце.
+Отсупы месяцкв по вертикали задаются при помощи массива, в котором по порядку расписаны 12 отступов для каждого месяца.
+Генерация таблицы с расстановкой смен происходит при помощи метода с алгритмом, которая генерирует массив расстановки смен при помощи разработанного алгоритма.
+-->
+
+
+<!-- вывод расстановки смен -->
+<tr v-for="(workDays, index) in getWork()">
+<!-- вывод определенного столбца смены -->
+<!--      <template v-if="index == 3"> -->
+    <template v-for="day in workDays">
+        <td v-if="day == 'В'" class="tb bg-primary bg-gradient">{{ day }}</td>
+        <td v-else-if="index % 2 == 0" class="tb bg-warning bg-gradient bg-opacity-10">{{ day }}</td>
+        <td v-else class="tb">{{ day }}</td>
+    </template>
+<!--     </template> -->
+<tr>
+
+<!-- вывод месяцев -->
+<tr v-for="(month, index) in getMonths()">
+    <template v-for="day in month">
+    <!-- проверка на текущий день -->
+    <td v-if="day == new Date().getDate() && index == new Date().getMonth()" class="tb" style="background: #0F9">
+        {{ day }}
+    </td>
+        <!-- проверка на праздничный день -->
+    <td v-else-if="checkDay(day, index+1) == 'hol'" class="tb bg-danger bg-gradient">
+        {{ day }}
+    </td>
+        <!-- проверка на воскресенье -->
+    <td v-else-if="checkDay(day, index+1) == 'sun'" class="tb bg-info bg-gradient">
+        {{ day }} <sup>вс</sup>
+    </td>
+           <!-- проверка на субботу -->
+    <td v-else-if="checkDay(day+1, index+1) == 'sun'" class="tb bg-info bg-gradient">
+        {{ day }} <sup>сб</sup>
+    </td>
+        <!-- Обучение или доработка -->
+     <td v-else-if="checkDay(day, index+1) == 'sun'" class="tb bg-info bg-success">
+        {{ day }} <sup>№</sup>
+    </td>
+        <!-- обычный день -->
+    <td v-else class="tb">
+        {{ day }}
+    </td>
+
+    </template>
+<tr>
+
+</table>
+
+
+
+<div class="row">
+    <div class="col-md-3 col-sm-3 col-xs-3 bg-warning bg-gradient"><sub>Обучение</sub></div>
+    <div class="col-md-3 col-sm-3 col-xs-3 bg-info bg-gradient"><sub>Воскресенье</sub></div>
+    <div class="col-md-3 col-sm-3 col-xs-3 bg-danger bg-gradient"><sub>Праздничные дни</sub></div>
+    <div class="col-md-3 col-sm-3 col-xs-3 bg-success bg-gradient"><sub>Доработка</sub></div>
+   </div>
+
+</div>
+
+            </div> <!-- end row -->
+
+        </div> <!-- end calendar -->
+
+    </div> <!-- end container -->
+
+<!-- подключение библиотек -->
+ <script src ="./scripts/bootstrap.bundle.min.js"></script>
+ <script src="./scripts/vue.global.js"></script>
+ <script src ="scripts/app.js"></script>
+
+    
+</body>
+</html>
